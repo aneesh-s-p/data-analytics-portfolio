@@ -1,0 +1,4 @@
+segment,customers,revenue,share_of_revenue_pct
+1. One-time buyer,45738,3965835.62,49.0
+2. Repeat buyer (2-3 orders),18664,3584869.29,44.3
+3. Loyal buyer (4+ orders),1579,539684.11,6.7

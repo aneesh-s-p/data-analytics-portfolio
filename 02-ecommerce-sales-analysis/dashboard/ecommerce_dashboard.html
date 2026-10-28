@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>E-commerce Sales Dashboard</title>
+<style>
+:root{--bg:#f4f6fa;--card:#fff;--ink:#16213a;--muted:#5d6a85;--grid:#e3e8f1;--c1:#1b2a4a;--c2:#4a7fd4;--c3:#e08a3c;--good:#2e7d32;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0f1626;--card:#18223a;--ink:#eaf0fb;--muted:#9aa8c4;--grid:#2a3656;--c1:#8fb4f0;--c2:#5f93e6;--c3:#f0a25c;--good:#6fcf75;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0f1626;--card:#18223a;--ink:#eaf0fb;--muted:#9aa8c4;--grid:#2a3656;--c1:#8fb4f0;--c2:#5f93e6;--c3:#f0a25c;--good:#6fcf75;color-scheme:dark}
+*{box-sizing:border-box}html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;line-height:1.45}
+.wrap{max-width:1100px;margin:0 auto;padding:20px 16px 40px}
+h1{font-size:1.5rem;margin:0}.sub{color:var(--muted);margin:4px 0 18px;font-size:.9rem}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:12px}
+.card{background:var(--card);border:1px solid var(--grid);border-radius:12px;padding:14px 16px}
+.kpi small{color:var(--muted);font-size:.8rem}.kpi b{display:block;font-size:1.7rem;margin-top:2px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.full{grid-column:1/-1}
+h2{font-size:.95rem;margin:0 0 2px}.note{color:var(--muted);font-size:.78rem;margin:0 0 8px}
+.box{position:relative;height:280px}.tall{height:380px}
+ul{margin:6px 0 0;padding-left:18px}li{margin:5px 0;font-size:.9rem}
+footer{color:var(--muted);font-size:.78rem;margin-top:14px}
+@media(max-width:760px){.kpis{grid-template-columns:1fr 1fr}.grid{grid-template-columns:1fr}.full{grid-column:auto}}
+</style></head><body><div class="wrap">
+<h1>E-commerce Sales Dashboard</h1>
+<p class="sub">BigQuery public dataset <i>thelook_ecommerce</i> (synthetic) · revenue excludes cancelled and returned items · USD · run 27 Oct 2026</p>
+<div class="kpis">
+<div class="card kpi"><small>Total orders</small><b>93,644</b></div>
+<div class="card kpi"><small>Customers</small><b>65,981</b></div>
+<div class="card kpi"><small>Revenue</small><b>$8.09M</b></div>
+<div class="card kpi"><small>Avg order value</small><b>$86.40</b></div></div>
+<div class="grid">
+<div class="card full"><h2>Monthly revenue</h2><p class="note">Oct 2026 is left out because the month is still in progress.</p><div class="box"><canvas id="a"></canvas></div></div>
+<div class="card"><h2>Revenue by category (top 15)</h2><p class="note">Hover a bar to see the profit margin.</p><div class="box tall"><canvas id="b"></canvas></div></div>
+<div class="card"><h2>Top 10 countries by revenue</h2><p class="note">China, the US and Brazil make up 71% of revenue.</p><div class="box tall"><canvas id="c"></canvas></div></div>
+<div class="card"><h2>Revenue per customer by channel</h2><p class="note">Nearly identical across channels, so Search wins on volume only.</p><div class="box"><canvas id="d"></canvas></div></div>
+<div class="card"><h2>Customer segments: share of customers vs revenue</h2><p class="note">Repeat and loyal buyers are 31% of customers but 51% of revenue.</p><div class="box"><canvas id="e"></canvas></div></div>
+<div class="card"><h2>Highest return rates by category</h2><p class="note">All sit between 10% and 11%, so returns are a general issue.</p><div class="box"><canvas id="f"></canvas></div></div>
+<div class="card"><h2>Customers who order again, by months since first order</h2><p class="note">Average share of a cohort that returns, across all cohorts.</p><div class="box"><canvas id="g"></canvas></div></div>
+<div class="card full"><h2>Key insights and recommendations</h2><ul>
+<li><b>Second purchase is the biggest gap.</b> 69% of customers buy once, and only about 2.4% of a cohort returns the next month. Test a 30-day reminder or discount.</li>
+<li><b>Channel quality is flat.</b> Add acquisition cost data before shifting budget between channels.</li>
+<li><b>Margin leaders:</b> Blazers &amp; Jackets (62%), Accessories (60%) and Suits (60%). Tops &amp; Tees is lowest at 44%.</li>
+<li><b>Concentration risk.</b> Three countries drive 71% of sales, so test mid-size markets such as the UK, Germany and France.</li></ul></div>
+</div><footer>Built with AI assistance (Claude); queries run and checked by the author.</footer></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script>
+const D={"month":["2019-01","2019-02","2019-03","2019-04","2019-05","2019-06","2019-07","2019-08","2019-09","2019-10","2019-11","2019-12","2020-01","2020-02","2020-03","2020-04","2020-05","2020-06","2020-07","2020-08","2020-09","2020-10","2020-11","2020-12","2021-01","2021-02","2021-03","2021-04","2021-05","2021-06","2021-07","2021-08","2021-09","2021-10","2021-11","2021-12","2022-01","2022-02","2022-03","2022-04","2022-05","2022-06","2022-07","2022-08","2022-09","2022-10","2022-11","2022-12","2023-01","2023-02","2023-03","2023-04","2023-05","2023-06","2023-07","2023-08","2023-09","2023-10","2023-11","2023-12","2024-01","2024-02","2024-03","2024-04","2024-05","2024-06","2024-07","2024-08","2024-09","2024-10","2024-11","2024-12","2025-01","2025-02","2025-03","2025-04","2025-05","2025-06","2025-07","2025-08","2025-09","2025-10","2025-11","2025-12","2026-01","2026-02","2026-03","2026-04","2026-05","2026-06","2026-07","2026-08","2026-09"],"rev":[287,1594,4628,3136,5268,5558,7926,7897,8216,6331,8748,11464,10698,15504,13996,12615,18416,20811,18918,19454,22500,20418,19171,25991,25393,24591,29829,30636,32622,30167,39626,40000,35498,41171,34081,39172,48786,44154,46538,40177,48980,51097,46644,55231,53819,54660,54769,62634,63286,56411,68065,67056,75644,68599,75690,73003,74237,82946,81613,87241,91609,85188,85993,97757,99605,103230,105905,113711,106370,116045,109624,117740,128242,110899,133126,139830,145646,142657,157918,160649,159863,170982,167830,174260,195976,196505,211476,213041,254483,248560,291619,316123,357985],"cat":["Outerwear & Coats","Jeans","Sweaters","Suits & Sport Coats","Swim","Fashion Hoodies & Sweatshirts","Sleep & Lounge","Shorts","Tops & Tees","Dresses","Active","Intimates","Pants","Accessories","Blazers & Jackets"],"catrev":[994694,924758,630636,492652,484004,480516,410393,381696,369517,357638,347852,336295,309968,306221,220731],"catm":[55.5,46.4,51.9,59.8,49.0,48.1,51.6,50.0,44.1,55.0,58.1,46.8,54.2,60.0,62.1],"ch":["Search","Organic","Facebook","Email","Display"],"chrev":[5668543,1199552,490520,400547,331227],"chrpc":[122.8,121.98,123.46,121.49,121.86],"co":["China","United States","Brasil","South Korea","France","United Kingdom","Germany","Spain","Japan","Australia"],"corev":[2759785,1811477,1164884,434325,384222,355739,345865,325095,194331,185075],"seg":["One-time buyer","Repeat buyer (2-3 orders)","Loyal buyer (4+ orders)"],"segc":[69.3,28.3,2.4],"segr":[49.0,44.3,6.7],"rc":["Skirts","Blazers & Jackets","Plus","Pants & Capris","Intimates","Maternity","Sleep & Lounge","Shorts","Sweaters","Tops & Tees"],"rr":[11.3,11.2,10.7,10.7,10.4,10.3,10.3,10.2,10.1,10.1],"ret":[2.4,2.05,2.0,1.93,1.84,1.68]};
+const cs=getComputedStyle(document.documentElement),v=n=>cs.getPropertyValue(n).trim();
+Chart.defaults.color=v('--muted');Chart.defaults.borderColor=v('--grid');Chart.defaults.maintainAspectRatio=false;
+Chart.defaults.plugins.legend.display=false;
+const money=n=>n>=1e6?'$'+(n/1e6).toFixed(2)+'M':n>=1e3?'$'+Math.round(n/1e3)+'K':'$'+n;
+const base=(t,labels,sets,opt={})=>new Chart(document.getElementById(t),{type:opt.type||'bar',data:{labels,datasets:sets},options:Object.assign({indexAxis:opt.h?'y':'x',scales:{x:{grid:{display:!opt.h}},y:{grid:{display:!!opt.h?false:true},ticks:opt.yt}}},opt.o||{})});
+const mt={callbacks:{label:c=>' '+money(c.parsed.y??c.parsed.x)}};
+base('a',D.month,[{data:D.rev,borderColor:v('--c2'),backgroundColor:v('--c2')+'33',fill:true,pointRadius:0,tension:.25}],{type:'line',yt:{callback:money},o:{plugins:{tooltip:mt},scales:{x:{ticks:{maxTicksLimit:9}},y:{ticks:{callback:money}}}}});
+base('b',D.cat,[{data:D.catrev,backgroundColor:v('--c1')}],{h:1,o:{plugins:{tooltip:{callbacks:{label:c=>' '+money(c.parsed.x),afterLabel:c=>' Profit margin: '+D.catm[c.dataIndex]+'%'}}},scales:{x:{ticks:{callback:money}},y:{ticks:{autoSkip:false,font:{size:11}}}}}});
+base('c',D.co,[{data:D.corev,backgroundColor:v('--c2')}],{h:1,o:{plugins:{tooltip:mt},scales:{x:{ticks:{callback:money}},y:{ticks:{autoSkip:false}}}}});
+base('d',D.ch,[{data:D.chrpc,backgroundColor:v('--c3')}],{o:{plugins:{tooltip:{callbacks:{label:c=>' $'+c.parsed.y.toFixed(2)+' per customer'}}},scales:{y:{beginAtZero:true,ticks:{callback:n=>'$'+n}}}}});
+base('e',D.seg,[{label:'% of customers',data:D.segc,backgroundColor:v('--c2')},{label:'% of revenue',data:D.segr,backgroundColor:v('--c3')}],{o:{plugins:{legend:{display:true},tooltip:{callbacks:{label:c=>' '+c.dataset.label+': '+c.parsed.y+'%'}}},scales:{y:{ticks:{callback:n=>n+'%'}}}}});
+base('f',D.rc,[{data:D.rr,backgroundColor:v('--c1')}],{h:1,o:{plugins:{tooltip:{callbacks:{label:c=>' '+c.parsed.x+'% returned'}}},scales:{x:{min:0,ticks:{callback:n=>n+'%'}},y:{ticks:{autoSkip:false,font:{size:11}}}}}});
+base('g',['Month 1','Month 2','Month 3','Month 4','Month 5','Month 6'],[{data:D.ret,borderColor:v('--good'),backgroundColor:v('--good'),tension:.2}],{type:'line',o:{plugins:{tooltip:{callbacks:{label:c=>' '+c.parsed.y+'% order again'}}},scales:{y:{min:0,max:5,ticks:{callback:n=>n+'%'}}}}});
+matchMedia('(prefers-color-scheme: dark)').addEventListener('change',()=>location.reload());
+</script></body></html>
