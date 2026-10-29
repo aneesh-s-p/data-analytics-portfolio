@@ -11,13 +11,12 @@ MSc Data Science graduate focused on connecting technical analysis to business d
 | [03 Marketing A/B Test Analysis](03-marketing-ab-test-analysis) | Did an ad campaign increase conversions? | Python, scipy | Ad lifted conversion from 1.79% to 2.56% (+43%, p < 0.001) |
 
 ## Other repositories
-- **alpha-portfolio-system**: cross-sectional stock/ETF selection with walk-forward training, permutation testing and a causal volatility-target overlay
-- **personal-finance-ai**: explainable spending-decision engine
-- **apex-intelligence**: market research platform (FastAPI and React)
-- **retinal-disease-classifier**: explainable deep learning prototype
-
+- [alpha-portfolio-system](https://github.com/aneesh-s-p/alpha-portfolio-system): cross-sectional stock/ETF selection with walk-forward training, permutation testing and a causal volatility-target overlay
+- [personal-finance-ai](https://github.com/aneesh-s-p/personal-finance-ai): explainable spending-decision engine
+- [apex-intelligence](https://github.com/aneesh-s-p/apex-intelligence): market research platform (FastAPI and React)
+- [axiogenesis](https://github.com/aneesh-s-p/axiogenesis): experimental cognitive-architecture prototype
 ## About the data
 The datasets are public (Kaggle and Google BigQuery public data) and are not stored in this repository. Each project's README links to the source and explains how to run it.
 
 ## AI assistance
-These projects were built with AI assistance (Claude) for code drafting and structure. I ran every analysis, checked the results, and wrote the interpretations.
+These projects were built with AI assistance (Claude and Chatgpt) for code drafting and structure. I ran every analysis, checked the results, and wrote the interpretations.
